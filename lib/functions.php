@@ -6,6 +6,7 @@
 	
 if(isset($_POST['functions'])){
 	switch ($_POST['functions']) {
+
 		case 'listaUsuarios':
 			$_SELECT = new mariaDB();
 			$_SELECT->connect();
@@ -13,36 +14,16 @@ if(isset($_POST['functions'])){
 			$_RESULT = $_SELECT->dataTable($_POST['oAjaxData']); 
 			die(json_encode($_RESULT,true));
 		break;
+		
 		case 'listaProdutos':
-
-			function bancoDeImg($opt=[]){
-				$param = (object)[
-					'query' 	=> $opt['query'] 	?? 'people',
-					'limit' 	=> $opt['limit'] 	?? 15,
-					'w' 		=> $opt['w'] 		?? 0,
-					'h' 		=> $opt['h'] 		?? 0,
-					'q' 		=> $opt['q'] 		?? 100,
-					'fit' 		=> $opt['fit'] 		?? 'crop',
-				];
-				$pesquisa	= explode('|',$param->query);
-				$retorno	= [];
-				foreach($pesquisa as $value){
-					$link =json_decode(file_get_contents('https://unsplash.com/napi/search?query='.$param->query.'&per_page='.$param->limit));
-					foreach($link->photos->results as $row){$retorno[] = substr($row->urls->raw,0,strpos($row->urls->raw,'?')).'?fit='.$param->fit.'&w='.$param->w.'&h='.$param->h.'&q='.$param->q.'';};
-				}
-				return $retorno;
-			}
-
-
 			$_SELECT = new mariaDB();
 			$_SELECT->connect();
 			$_SELECT->set_table('PRODUTOS');
 			$_RESULT = $_SELECT->dataTable($_POST['oAjaxData']); 
-
-
-
 			die(json_encode($_RESULT,true));
+
 		break;
+
 		case 'salvaCampoProduto':
 			$UPDATE = new mariaDB();
 			$UPDATE->connect();
@@ -51,6 +32,7 @@ if(isset($_POST['functions'])){
 			$UPDATE->set_where('CODE="'.$_POST["ORIGINAL"]['CODE'].'"');
 			$UPDATE->update();
 		break;
+
 		case 'salvaCampoUsuario':
 			$UPDATE = new mariaDB();
 			$UPDATE->connect();
@@ -59,6 +41,7 @@ if(isset($_POST['functions'])){
 			$UPDATE->set_where('CODE="'.$_POST["ORIGINAL"]['CODE'].'"');
 			$UPDATE->update();
 		break;
+
 		case 'novoUsuario':
 			$INSERT = new mariaDB();
 			$INSERT->connect();
@@ -73,6 +56,7 @@ if(isset($_POST['functions'])){
 			$_RESULT = $_SELECT->fetch_array('param')[0];
 			die(json_encode($_RESULT,true));
 		break;
+
 		default:
 			die('["Função invalida"]');
 		break;
