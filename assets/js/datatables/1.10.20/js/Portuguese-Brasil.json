@@ -1,0 +1,39 @@
+
+
+{
+    "sEmptyTable": "Nenhum registro encontrado",
+    "sInfo": "_START_ a _END_ de _TOTAL_",
+    "sInfoEmpty": "Mostrando 0 até 0 de 0 registros",
+    "sInfoFiltered": "(Total _MAX_ registros)",
+    "sInfoThousands": ".",
+    "sLengthMenu": "<div class=\"label-combo-limit\">Exibir até:</div> _MENU_",
+    "sLoadingRecords": "Carregando...",
+    "sProcessing": "Processando...",
+    "sZeroRecords": "Nenhum registro encontrado",
+    "sSearch": "<div class=\"label-input-search\">Pesquisar:</div>",
+    "oPaginate": {
+        "sNext": "Próximo",
+        "sPrevious": "Anterior",
+        "sFirst": "Primeiro",
+        "sLast": "Último"
+    },
+    "oAria": {
+        "sSortAscending": ": Ordenar colunas ascendente",
+        "sSortDescending": ": Ordenar colunas  descendente"
+    },
+    "select": {
+        "rows": {
+            "_": "Selecionado %d linhas",
+            "0": "Nenhuma linha selecionada",
+            "1": "Selecionado 1 linha"
+        }
+    },
+    "buttons": {
+        "copy": "Copiar para a área de transferência",
+        "copyTitle": "Cópia bem sucedida",
+        "copySuccess": {
+            "1": "Uma linha copiada com sucesso",
+            "_": "%d linhas copiadas com sucesso"
+        }
+    }
+}

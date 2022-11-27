@@ -1,0 +1,133 @@
+	.mouse-move{
+		cursor: s-resize;
+	}
+	.paginate_button {
+		position: relative;
+		padding: 8px;
+		border-radius: 6px;
+		cursor: pointer;
+		background-color: #f3f3f3;
+		margin: 2px;
+	}
+a.paginate_button:hover {
+    background-color: #e8e8e8;
+    color: #000;
+}
+a.paginate_button.current {
+    background-color: #525252;
+    color: #FFF;
+}
+.dataTables_paginate{
+	position: absolute;
+	float: right;
+	left: 50%;
+	padding: 9px;
+	transform: translateX(-50%);
+	width: fit-content;
+}
+.dataTables_wrapper {
+    overflow-x: auto;
+    overflow-y: hidden;
+    padding-bottom: 39px;
+}
+.tabela-horizontal tr th{
+	width: 150px;
+	background-color: #f6f6f6;
+}
+.dataTables_wrapper .dataTables_length label{
+	width: 100%;
+} 
+.dataTables_wrapper .dataTables_length select{
+	width: 100%!important;
+	padding: 6px;
+}
+.dataTables_wrapper .dataTables_filter label {
+	width: 100%;
+}
+.dataTables_wrapper .dataTables_filter input:focus {
+	outline: none;
+}
+.dataTables_wrapper .dataTables_filter input {
+	font-weight: 100;
+	letter-spacing: 1px;
+	font-size: 12px;
+	width: 100%;
+	margin: 0;
+	padding: 5.5px;
+	-webkit-border-radius: 4px;
+	-moz-border-radius: 4px;
+	border-radius: 4px;
+	border: solid 1px #CCC;
+}
+.dataTables_wrapper .dataTables_filter .label-search{
+	position: relative;
+	float: left;
+	padding: 3px;
+	font-weight: 100;
+	color: #ffffff4a;
+}
+.dataTables_info{
+	position: relative;
+}
+.pagination * {
+	user-select: none;
+	-ms-user-select: none;
+	-moz-user-select:none;
+	-webkit-user-select: none;
+	-ms-touch-select: none;
+}
+.btn-add-item{
+	padding: 10px 20px!important;
+	position: relative;
+	float: right;
+	width: fit-content;
+	margin-top: 17px;
+}
+.dataTables_wrapper .dataTables_length{
+	float: left;
+	position: relative;
+}
+.dataTables_wrapper .dataTables_filter{
+	position: relative;
+	float: left;
+	padding: 0 20px;
+} 
+table.dataTable span.column_highlight {
+	background-color: #73c8ff;
+	border-radius: 0.28571429rem;
+	padding: 0 6px 3px;
+}
+
+.dataTables_scrollBody{
+	overflow-x: hidden!important;
+	border-top: solid 1px;
+}
+.image-frame-wrapper{
+	text-align: center;
+}
+
+.vitrine .card .card-body .image-frame-wrapper{
+	width: 100%;
+	padding-top: 70%;
+	background-repeat: no-repeat;
+	background-position: center;
+	background-size: cover;
+}
+.vitrine .card .card-body{
+	border: solid 1px #ffffff14;
+	margin: 7px 0;
+}
+
+@media only screen and (max-width: 460px){
+	.dataTables_wrapper .dataTables_length, .dataTables_wrapper .dataTables_filter, .btn-add-item{
+		width: 100%!important;
+		padding: 0;
+	}
+	.dataTables_wrapper .dataTables_length{
+		margin-top: 10px;
+	}
+	.dataTables_wrapper .dataTables_filter{
+		margin-top: -20px;
+		margin-bottom: 15px;
+	}
+}

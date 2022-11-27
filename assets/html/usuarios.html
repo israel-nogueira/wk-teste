@@ -1,0 +1,212 @@
+<!-- BEGIN STYLES -->
+	<link rel="stylesheet" href="/assets/js/datatables/highlight/dataTables.searchHighlight.css">
+	<link rel="stylesheet" href="/assets/js/datatables/reorder-rows/rowReorder.dataTables.min.css">
+	<link rel="stylesheet" href="/assets/css/lista-usuarios.css">
+<!-- END STYLES -->
+
+
+<!-- BEGIN CONTENT -->
+	<header class="page-header">
+		<h2>{HEADER}</h2>
+	</header>
+		<div class="row">
+			<div class="col-12">
+				<section class="card">
+					<div class="card-body dtbl-ctnr">
+						<table class="table table-bordered table-striped" id="datatable"></table>
+					</div>
+				</section>
+			</div>
+		</div>
+<!-- END CONTENT -->
+
+
+<!-- BEGIN SCRIPTS -->
+	<script src="/assets/js/jquery.serialize-object.js"></script>
+	<script src="/assets/js/mustache.min.js"></script>
+	<script src="/assets/vendor/select2/js/select2.js"></script>
+	<script src="/assets/vendor/datatables/media/js/jquery.dataTables.min.js"></script>
+	<script src="/assets/js/datatables/select/dataTables.select.min.js"></script>
+	<script src="/assets/js/datatables/highlight/jquery.highlight.js"></script>
+	<script src="/assets/js/datatables/highlight/dataTables.searchHighlight.min.js"></script>
+	<script src="/assets/js/datatables/reorder-rows/dataTables.rowReorder.min.js"></script>
+	<script>
+			/*
+			|------------------------------------------------------------------
+			|	INICIA O PLUGIN
+			|-------------------------------------------------------------------
+			*/
+				var idDataTable = '.dtbl-ctnr #datatable'
+				var startDataTable = $(idDataTable).DataTable({
+										"scrollX": true,
+										"processing":true,
+										"serverSide":true,
+										"paging":true,
+										'autofill':true,
+										"info":true,
+										'order':[[0, 'asc']],
+										"pagingType":"numbers",
+										'select':false,
+										'responsive':true,
+										'buttons':true,
+										"language":{ 
+											"url": '/assets/js/datatables/1.10.20/js/Portuguese-Brasil.json'
+										},
+										dom: 'l<"toolbar">frtip',
+										select: true,
+										// fnRowCallback: 	function (nRow, aData) {},
+										rowCallback: function( row, data ) {
+											// $('.dtbl-ctnr .dataTables_scrollBody .vitrine').prepend(
+											// 	Mustache.render($("#item_vitrine").html(),data)
+											// );
+										},
+										preDrawCallback: function( settings ) {
+											// $('.dtbl-ctnr .dataTables_scrollBody .vitrine').remove();
+											// $('.dtbl-ctnr .dataTables_scrollBody').prepend('<div class="vitrine row row-gutter-sm">');
+										},
+										initComplete: 		function () {
+											// $('.dtbl-ctnr #datatable').hide();
+											// $(idDataTable+"_filter" ).hide();
+											// $(idDataTable+"_length" ).hide();
+											// $(idDataTable+"_length" ).hide();
+											// $(idDataTable+"_paginate").hide();
+											// $(idDataTable+"_info").hide();
+											// $(idDataTable+"_wrapper").prepend('<div id="back" class="btn btn-primary" style="color: #000;margin:20px 0;position:relative;float:left;">Voltar aos tipos</div>')
+											// $(idDataTable+"_wrapper").find('.dataTables_scrollHead').hide();									
+											$(idDataTable+"_wrapper").prepend('<a href="/novo-usuario" class="btn btn-primary" style="color: #000;margin:20px 0;position:relative;float:right;">Adicionar usuário</a>')
+										},
+										"ajax":function(request,drawCallback,settings) {
+											$.ajax({
+												contentType: "application/x-www-form-urlencoded; charset=UTF-8",
+												dataType: "text",
+												url: "/lib/functions.php",
+												method: "POST",
+												async: false,
+												data: {
+													oAjaxData:settings.oAjaxData,
+													functions:"listaUsuarios"
+												},
+												success: 	function (request)	{
+													drawCallback(JSON.parse(request));
+												}
+											});
+										},										
+										"columns": [
+											{
+												data:'CODE',
+												name:'CODE',
+												sTitle: "CODE",
+												className: '',
+												width: "auto",
+												orderable:true,
+												fnCreatedCell : function (aData,nTd, sData, oData, iRow, iCol) {},
+												visible: true
+											},
+											{
+												data:'NOME',
+												name:'NOME',
+												sTitle: "NOME",
+												className: 'editorInline',
+												width: "auto",
+												orderable:true,
+												fnCreatedCell : function (aData,nTd, sData, oData, iRow, iCol) {},
+												visible: true
+											},
+											{
+												data:'CPF',
+												name:'CPF',
+												sTitle: "CPF",
+												className: 'editorInline',
+												width: "auto",
+												sType: "string",
+												orderable:true,
+												visible: true,
+												fnCreatedCell : function (aData,nTd, sData, oData, iRow, iCol) {},
+											},
+											{
+												data:'ENDERECO',
+												name:'ENDERECO',
+												sTitle: "ENDERECO",
+												className: 'editorInline',
+												width: "auto",
+												sType: "string",
+												orderable:true,
+												visible: true,
+												fnCreatedCell : function (aData,nTd, sData, oData, iRow, iCol) {},
+											},
+											{
+												data:'NASCIMENTO',
+												name:'NASCIMENTO',
+												sTitle: "NASCIMENTO",
+												className: 'editorInline',
+												width: "auto",
+												sType: "string",
+												orderable:true,
+												visible: true,
+												fnCreatedCell : function (aData,nTd, sData, oData, iRow, iCol) {},
+											},
+											{
+												data:'EMAIL',
+												name:'EMAIL',
+												sTitle: "EMAIL",
+												className: 'editorInline',
+												width: "auto",
+												sType: "string",
+												orderable:true,
+												visible: true,
+												fnCreatedCell : function (aData,nTd, sData, oData, iRow, iCol) {},
+											}
+															
+										]
+									
+									});
+
+			/*
+			|------------------------------------------------------------------
+			|	EDIÇÃO DOS CAMPOS
+			|-------------------------------------------------------------------
+			*/
+
+				$(idDataTable).on('click', 'td.editorInline', function () {
+					var DOM_TD			= $(this);
+					var DOM_TR			= $(this).closest('tr');
+					var CELL			= startDataTable.cell( this );
+					var COLUNA			= startDataTable.settings().init().columns;
+					var INDEX_COLUNA	= startDataTable.cell(this).index().column;
+					var INDEX_ROW		= $(this).closest('tr').index();
+					var DATA_COLUNA		= COLUNA[INDEX_COLUNA].data;
+					var row				= startDataTable.row(DOM_TR);
+					var colunmData		= startDataTable.column( INDEX_COLUNA ).data()[row.index()];
+					var conteudoTD 		= row.data();
+					if($(DOM_TD).find('input').length==0){
+						$(DOM_TD).html('<input value="'+colunmData+'" style="border:solid 1px #0000003b;border-radius: 5px;width: 100%;padding: 10px;margin: 0px;"/>');
+						$(DOM_TD).find('input').on('change',function(){
+								$.ajax({
+									contentType: "application/x-www-form-urlencoded; charset=UTF-8",
+									dataType: "text",
+									url: "/lib/functions.php",
+									method: "POST",
+									async: false,
+									data: {
+										functions:"salvaCampoUsuario",
+										COLUNA:DATA_COLUNA,
+										VALOR:$(DOM_TD).find('input').val(),
+										ORIGINAL:conteudoTD
+									},
+									success: 	function (request)	{
+										CELL.data( $(DOM_TD).find('input').val() )
+									}
+								});
+
+						})
+						$(DOM_TD).find('input').focus();
+						$(DOM_TD).find('input').focusout(function(){CELL.data($(this).val())});
+					}
+				});
+	</script>
+<!-- END SCRIPTS -->
+
+
+<!-- BEGIN TEMPLATE -->
+<!-- END TEMPLATE -->
+

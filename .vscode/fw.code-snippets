@@ -1,0 +1,1255 @@
+{
+	// Place your Framework workspace snippets here. Each snippet is defined under a snippet name and has a scope, prefix, body and 
+	// description. Add comma separated ids of the languages where the snippet is applicable in the scope field. If scope 
+	// is left empty or omitted, the snippet gets applied to all languages. The prefix is what is 
+	// used to trigger the snippet and the body will be expanded and inserted. Possible variables are: 
+	// $1, $2 for tab stops, $0 for the final cursor position, and ${1:label}, ${2:another} for placeholders. 
+	// Placeholders with the same ids are connected.
+	// Example:
+
+	"BLOCK.IO": {
+		"scope": ["php"],
+		"prefix": ["btc"],
+		"body": [
+			"import::blockio();",
+			"/*",
+			"|------------------------------------------------------------------",
+			"|	 Os tipos de endereços disponíveis para Bitcoin e Litecoin são WITNESS_V0 e P2SH (padrão) ",
+			"|   O Dogecoin está limitado a endereços P2SH neste momento.",
+			"|-------------------------------------------------------------------",
+			"*/",
+			"",
+			"	\\$version		= 2;",
+			"	\\$apiKey			= '5e05-83bf-cdcb-789c';",
+			"	\\$pin			= '34ae0e74ced01e471fc0a8509d68d4c810ddd6d90417c2874ab2ec33e2bf';",
+			"	\\$block_io		= new \\BlockIo\\Client(\\$apiKey, \\$pin, \\$version);",
+			"//-------------------------------------------------------------------",
+			"	",
+			"	\\$newAddressInfo =  \\$block_io->get_new_address();",
+			"	\\$newAddressInfo =  \\$block_io->get_new_address(array('label' => 'LABEL'));",
+			"	\\$newAddressInfo =  \\$block_io->get_new_address(array('address_type' => 'ADDRESS TYPE'));",
+			"	\\$newAddressInfo =  \\$block_io->get_balance([]);",
+			"	\\$newAddressInfo =  \\$block_io->get_my_addresses(array('page' => 1));",
+			"	\\$newAddressInfo =  \\$block_io->get_address_balance(array('addresses' => '2Mxwp25NzZixr3rbgezAiwzwVubhREpu6YN,2N85W9Z1J6azvXNsLW4td9AnP9SWKPiQDZP'));",
+			"	\\$newAddressInfo =  \\$block_io->get_address_balance(array('labels' => 'default,ntonku94'));",
+			"	\\$block_io->create_notification(array('type' => 'address', 'address' => 'ANY ADDRESS', 'url' => 'YOUR URL'));",
+			"	",
+			"	// arquiva",
+			"	\\$block_io->archive_addresses(array('addresses' => 'ADDRESS1,ADDRESS2,...'));",
+			"	\\$block_io->archive_addresses(array('labels' => 'LABEL1,LABEL2,...'));",
+			"	// desarquiva",
+			"	\\$block_io->unarchive_addresses(array('addresses' => 'ADDRESS1,ADDRESS2,...'));",
+			"	\\$block_io->unarchive_addresses(array('labels' => 'LABEL1,LABEL2,...'));",
+			"	// lista arquivados",
+			"	\\$block_io->get_my_archived_addresses(array('page' => PAGE_NUMBER));",
+			"",
+			"	//Retorna os dados brutos, incluindo hex de transação, para um determinado ID de transação.",
+			"	\\$block_io->get_raw_transaction(array('txid' => 'TXID'));",
+			"",
+			"	// VERIFICA SE É UM ENDEREÇO VÁLIDO",
+			"	\\$block_io->is_valid_address(array('address' => 'ADDRESS'));",
+			"	",
+			"	// DADOS DA CONTA",
+			"	\\$block_io->get_account_info();",
+			"",
+			"	// Retorna a transação bruta decodificada ",
+			"	// para uma determinada transação em forma hexadecimal",
+			"	\\$block_io->decode_raw_transaction(array('tx_hex' => 'TX_HEX'));",
+			"",
+			"//-------------------------------------------------------------------",
+			"	// get ultimas 25 transações",
+			"	\\$block_io->get_transactions(array('type' => 'sent'));",
+			"	\\$block_io->get_transactions(array('type' => 'received'));",
+			"",
+			"	\\$block_io->get_transactions(array('type' => 'sent', 	'before_tx' => 'TXID'));",
+			"	\\$block_io->get_transactions(array('type' => 'received', 'before_tx' => 'TXID'));",
+			"",
+			"	\\$block_io->get_transactions(array('type' => 'received', 'addresses'	=> 'ADDRESS1,ADDRESS2,...'));",
+			"	\\$block_io->get_transactions(array('type' => 'received', 'user_ids'	=> 'USERID1,USERID2,...'));",
+			"	\\$block_io->get_transactions(array('type' => 'received', 'labels'	=> 'LABEL1,LABEL2,...'));",
+			"",
+			"	\\$block_io->get_transactions(array('type' => 'sent', 	'before_tx' => 'TXID', 'addresses' => 'ADDRESS1,ADDRESS2,...'));",
+			"	\\$block_io->get_transactions(array('type' => 'received', 'before_tx' => 'TXID', 'addresses' => 'ADDRESS1,ADDRESS2,...'));",
+			"",
+			"",
+			"",
+			"	\\$prepara_transaction 			= \\$block_io->prepare_transaction(array(",
+			"		'from_address'				=> '2Mxwp25NzZixr3rbgezAiwzwVubhREpu6YN',",
+			"		'to_address'				=> '2N85W9Z1J6azvXNsLW4td9AnP9SWKPiQDZP', ",
+			"		'amount'					=> '0.00001'",
+			"	));",
+			"	\\$assina_transaction				= \\$block_io->create_and_sign_transaction(\\$prepara_transaction);",
+			"	\\$finaliza_transaction			= \\$block_io->submit_transaction(array('transaction_data' => \\$assina_transaction));",
+			"	\\$resumo_transaction				= \\$block_io->summarize_prepared_transaction(\\$finaliza_transaction);",
+
+		]
+	},
+
+	"MODELO DE PÁGINA (TEMPLATE)": {
+		"scope": ["html"],
+		"prefix": ["model","template","padrao"],
+		"body": [
+			"<!-- BEGIN STYLES -->",
+			"	<style></style>",
+			"<!-- END STYLES -->",
+			"",
+			"<!-- BEGIN CONTENT -->",
+			"	<div class=\"row\">",
+			"		<div class=\"col-12\">",
+			"			<section class=\"card\">",
+			"				<header class=\"card-header\">",
+			"					<h2 class=\"card-title\">MÓDULO BASICO</h2>",
+			"				</header>",
+			"				<div class=\"card-body\"></div>",
+			"			</section>",
+			"		</div>",
+			"	</div>",
+			"<!-- END CONTENT -->",
+			"",
+			"<!-- BEGIN SCRIPTS -->",
+			"	<script></script>",
+			"<!-- END SCRIPTS -->",
+			"",
+			"<!-- BEGIN TEMPLATE -->",
+			"	<template></template>",
+			"<!-- END TEMPLATE -->",
+		]
+	},
+
+	"CHECK 🔴🟢🟡🟠": {
+		"prefix": ["check", "todo","lista"],
+		"body": [
+			"",
+			"|----------------------------------------------------------------------" ,
+			"|  ${1:TITULO DA LISTA}" ,
+			"|----------------------------------------------------------------------",
+			"|  🔴 ${2:A fazer}",
+			"|  🟢 ${3:Feito}",
+			"|  🟡 ${4:Fazendo}",
+			"|  🟠 ${5:Alerta}",
+			"|----------------------------------------------------------------------",
+			"",
+		]
+	},
+	
+	"LESS": {
+		"scope": ["PHP"],
+		"prefix": ["less","lessc"],
+		"body": [
+			"import::lessc();",
+			"",
+			"//DOCUMENTAÇÃO:",
+			"https://github.com/israel-nogueira/less.php",
+			"",
+			"//PATH absoluto.less",
+			"//PATH prepend para qualquer imagem relativa ou @import urls no arquivo .less.",
+			"\\$parser = new Less_Parser();",
+			"\\$parser->parseFile('/var/www/mysite/bootstrap.less', 'https://example.org/mysite/');",
+			"\\$css = \\$parser->getCss();",
+			"",
+			"\\$parser = new Less_Parser();",
+			"\\$parser->parse( '@size: 20px+10px; #header { font-size: @size; }' );",
+			"\\$css = \\$parser->getCss();",
+		]
+	},
+
+	"$_DESKTOP->HEADER": {
+		"scope": ["PHP"],
+		"prefix": ["header"],
+		"body": [
+			"//------------------------------------------------------------------",
+			"//	HEADER PADRÃO DO SISTEMA",
+			"//------------------------------------------------------------------",
+			"	\\$_DESKTOP->HEADER = elements::getHeader('$1',[['label','link'],['label','link'],['label','link'],['label','link']]);",
+		]
+	},
+	"SESSION::USER()": {
+		"scope": ["PHP"],
+		"prefix": ["session","uid","user"],
+		"body": [
+			"session::USER()['UID'];",
+		]
+	},
+
+	"ENV": {
+		"scope": ["PHP"],
+		"prefix": ["env"],
+		"body": [
+			"env::init();",
+			"env::install();",
+			"env::getAll();",
+			"env::updateJSON();",
+			"env::update(\\$KEY=null,\\$VALUE=null);",
+			"env::insert(\\$KEY=null,\\$VALUE=null);",
+			"env::delete(\\$KEY=null);"
+		]
+	},
+
+
+	"PATH": {
+		"scope": ["PHP"],
+		"prefix": ["ROOT","PATH","APPLICATION_ROOT","APPLICATION_PATH"],
+		"body": [
+			"\\$_PATH = getenv('APPLICATION_ROOT').'/projeto/'.getenv('APPLICATION_PATH').'/$1';",
+		]
+	},
+
+
+
+
+	"Redimenciona e cropa imagem": {
+		"scope": ["PHP"],
+		"prefix": ["img","cropImage","thumb","resize"],
+		"body": [
+			"img::cropImage(\\$_IMG=null,\\$sufix=true,\\$size=[50,50],\\$crop=true,\\$resize=true);",
+			"",
+			"",
+			"img::processaImagem(\\$_FILENAME,[750,500,100,50],1000);",
+			"img::processaImagem([\\$_FILENAME,'novo-nome-imagem'],[[20,70,100],[750,500],[500,0],[100,23],[50,50]],1000);",
+		]
+	},
+
+	"window.setTopAlert": {
+		"scope": ["PHP","HTML","javascript"],
+		"prefix": ["top","alert"],
+		"body": [
+			"window.setTopAlert({",
+			"	mensagem :'teste de mensagem!',",
+			"	element :\"#modals_topo\",",
+			"	type :'dark',",
+			"	align :'left',",
+			"	close :true,",
+			"	timeout :2000,",
+			"	types:['dark','danger','info','success','default','primary','warning']",
+			"});",
+		]
+	},
+
+	"URL_PATH": {
+		"prefix": ["url","path"],
+		"body": [
+			"URL_PATH",
+		]
+	},
+
+	"PROJETO_PATH": {
+		"prefix": ["url","path"],
+		"body": ["PROJETO_PATH"]
+	},
+
+	"Documentação /**/": {
+		"scope": ["PHP","javascript","css"],
+		"prefix": ["/*","comentario","documentação"],
+		"body": [
+			"/*",
+			"|------------------------------------------------------------------",
+			"|	$1",
+			"|-------------------------------------------------------------------",
+			"|	$2",
+			"|-------------------------------------------------------------------",
+			"*/",
+		]
+	},
+
+
+	"Swal.queue": {
+		"scope": ["javascript"],
+		"prefix": ["alert","modal","Swal"],
+		"body": [
+			"Swal.queue([{",
+			"		icon: 'success',//error",
+			"		title: 'Carteira validada com sucesso',",
+			"		confirmButtonText: 'ok',",
+			"		html:'Saldo atual em sua carteira é de ฿ '+json.response.confirmed_received_value,",
+			"		showLoaderOnConfirm: true,",
+			"		allowOutsideClick: false,",
+			"		preConfirm: () => {",
+			"			// window.location.reload();",
+			"		},",
+			"}])"
+		]
+	},
+	"Documentação //": {
+		"scope": ["PHP","javascript"],
+		"prefix": ["//","comentario","documentação"],
+		"body": [
+			"//------------------------------------------------------------------",
+			"//	$1",
+			"//------------------------------------------------------------------",
+		]
+	},
+	"View Template": {
+		"scope": ["PHP"],
+		"prefix": ["view","template"],
+		"body": [
+			"\\$_HTML		= getenv('APPLICATION_ROOT').'/projeto/'.getenv('APPLICATION_PATH').'/path/index.html';",
+			"\\$_PHP		= getenv('APPLICATION_ROOT').'/projeto/'.getenv('APPLICATION_PATH').'/path/index.php';",
+			"\\$_STRING	= '<span>{variavel}</span>';",
+			"\\$_OBJECT	= ['variavel'=>'ÉÉÉÉÉÉ DESSE JEITO'];",
+			"",
+			"router::view(\\$_HTML,\\$_PHP)->show();",
+			"router::view(\\$_STRING,\\$_PHP)->show();",
+			"router::view(\\$_STRING,\\$_OBJECT)->show();",
+			"router::view(\\$_STRING,function(\\$_VIEW){ ",
+			"	\\$_VIEW->variavel = 'kkkk';",
+			"})",
+			"->block('CONTENT')",
+			"->block('TEMPLATE')",
+			"->show();"
+		]
+	},
+	"router::path": {
+		"scope": ["PHP"],
+		"prefix": ["rota","router"],
+		"body": [
+			"import::router();",
+			"",
+			"",
+			"//{{param}}/{{param:[a-z]+}}/{{param:[0-9]+}}/{{param,base64_encode}}[/{{produto}}[/{{uid}}[/{{tamanho}}/]/]/]",
+			"router::path('/path1/{{id}}/{{nome}}')->request('GET,POST',function(\\$URL_PATH){",
+			"",
+			"		router::view('<b>#{id}</b><span>{nome}<span>',function(\\$_VIEW)use(&\\$URL_PATH){",
+			"			\\$_VIEW->id		= \\$URL_PATH->ID;",
+			"			\\$_VIEW->nome	= \\$URL_PATH->NOME;",
+			"		})->show();",
+			"",
+			"});",
+			"",
+			"",
+			""
+		]
+	},
+
+
+	"socketIO-PHP": {
+		"scope": ["PHP"],
+		"prefix": ["socket","io"],
+		"body": [
+			"import::router();",
+			"",
+			"",
+			"socketio::send(['FUNCTION'=>'socketio',['param1'=>123]])",
+			""
+		]
+	},
+	"window.setTopAlert": {
+		"scope": ["PHP","javascript","HTML"],
+		"prefix": ["setTopAlert","alert","top"],
+		"body": [
+			"window.setTopAlert({",
+			"	mensagem :'teste de mensagem!',",
+			"	element : \"#modals_topo\",",
+			"	style :'',",
+			"	type :'dark',",
+			"	align :'left',",
+			"	close : true,",
+			"	timeout : 2000,",
+			"	types: ['dark','danger','info','success','default','primary','warning'",
+			"	]",
+			"});",
+		]
+	},
+	"countdown": {
+		"scope": ["javascript","HTML","PHP"],
+		"prefix": ["countdown"],
+		"body": [
+			"window.countdown({",
+			"	container   	: \"*[count-down]\",",
+			"	attrData   		: \"count-down\",",
+			"	onStart   		: function(element) {return true},",
+			"	onRestart   	: function(element) {return true},",
+			"	onfinished  	: function(element,arrTime) {return true},",
+			"	onUpdate   		: function(element,arrTime) {",
+			"		var clock = arrTime['dia']+':'+arrTime['hora']+':'+arrTime['minuto']+':'+arrTime['segundo'];",
+			"		\\$(div).html(clock)",
+			"	}",
+			"});"
+		]
+	},
+
+
+	"Controle de Rota": {
+		"scope": ["PHP"],
+		"prefix": ["rota","router"],
+		"body": [
+			"import::router();",
+			"",
+			"",
+			"router::path('/path1/{{ID}}/{{NOME}}')",
+			"		->function([],function(){}) 			//	['app:fn1','app:fn2','app:fn3']",
+			"		->filterParameters([])					//	['a','b','c']",
+			"		->requireParameters([],function(){})	//	['a','b','c']",
+			"		->permission([],function(){})			//	[1,2,3,4]",
+			"		->verify(true, function(){})			//	true|false",
+			"		->request('GET,POST',function(\\$URL_PATH){",
+			"			globals::view('<b>#{id}</b><span>{nome}<span>',function(\\$_VIEW)use(&\\$URL_PATH){",
+			"				\\$_VIEW->id		= \\$URL_PATH->ID;",
+			"				\\$_VIEW->nome	= \\$URL_PATH->NOME;",
+			"			})->show();",
+			"		});",
+			"",
+			"",
+			""
+		]
+	},
+
+
+	"form Upload File": {
+		"scope": ["html"],
+		"prefix": ["form", "up","upload"],
+		"body": [
+			"<form id=\"$1\">",
+			"	<!-- ",
+			"		accept=\"image/*\"",
+			"		accept=\"image/png,image/jpg,image/jpeg\"", 
+			"		accept=\".png,.jpg,.jpeg,.gif\"",
+			"		accept=\"application/x-httpd-php,application/javascript,application/zip\"",
+			"	-->",
+			"	<input ",
+			"		id=\"inputFile1\" ",
+			"		type=\"file\" ",
+			"		onchange=\"window.changeFile(this)\" ",
+			"		accept=\".png,.jpg,.jpeg,.gif\" ",
+			"		name=\"___\" ",
+			"	>",
+			"</form>",
+		]
+	},
+	"AJAX function()": {
+		"scope": ["html","php","javascript"],
+		"prefix": ["ajax", "aj"],
+		"body": [
+			"	\\$(function () {",
+			"		\\$.ajax({",
+			"			contentType: \"application/json; charset=UTF-8\",",
+			"			//contentType: \"application/x-www-form-urlencoded; charset=UTF-8\",",
+			"			dataType: \"json\",//json, html, text",
+			"			url: \"_____URL_____\",",
+			"			method: \"POST\",",
+			"			async: false,",
+			"			data: {},",
+			"			success: 	function (data)	{	console.log(data);},",
+			"			error: 		function (request){	console.error(request);},",
+			"			done: 		function (request){	console.error(request);},",
+			"		});",
+			"	});"
+		]
+	},
+
+
+	"mercadoPagoPRO": {
+		"scope": "php",
+		"prefix": ["mp","mercado", "pix","pagamento"],
+		"body": [
+			"\\$_LINK =  mercadopago::setPayer([",
+            "            'name' => 'Rogerio',",
+            "            'surname' => 'dos Santos',",
+            "            'email' => 'rogerio@feats.com.br',",
+            "            'phone' => ['area_code' => '41', 'number' => '999999333']",
+			"		])",
+            "        ->noticationUrl('https://zequinha.com')",
+            "        ->referenceCode('YDJ-8')",
+            "        ->expiraEm(date('Y-m-d\\TH:i:s.000\\Z',strtotime('+2 days')))",
+            "        ->addItem([",
+            "            'title'         => '11111',",
+            "            'description'   => 'Dummy 11111111',",
+            "            'picture_url'   => 'https: //placehold.jp/150x150.png',",
+            "            'category_id'   => 'car_electronics',",
+            "            'quantity'      => 1,",
+            "            'currency_id'   => 'BRL',",
+            "            'unit_price'    => 10,",
+			"		])",
+            "        ->metaData(['kkkkk' => 123])",
+            "        ->backUrls([",
+            "            'success' => 'https://' . getEnv('DOMINIO') . '/mp-webhook/success',",
+            "            'pending' => 'https://' . getEnv('DOMINIO') . '/mp-webhook/pending',",
+            "            'failure' => 'https://' . getEnv('DOMINIO') . '/mp-webhook/failure',",
+			"			]) ->pagamentoPro();",
+			"",
+            " die(globals::wsReturn(\\$_LINK,1));"
+		]
+	},
+	"mercadoPago": {
+		"scope": "php",
+		"prefix": ["mp","mercado", "pix","pagamento"],
+		"body": [
+			"",
+			"import::mercadopago();",
+			"",
+			"//\\$pagamento = mercadopago::pec([",
+			"//\\$pagamento = mercadopago::bol([",
+			"\\$pagamento = mercadopago::pix([",
+			"	'AMBIENTE' => 'MERCADOPAGO_DEV',//MERCADOPAGO_PROD",
+			"	'PRODUTO'=>'Nome do Produto',",
+			"	'VALOR'=>25.5,",
+			"	'TYPE'=>'pix', //pec|pix|bolbradesco",
+			"	'WEBHOOK'=>'/url',",
+			"	'REFERENCIA'=>'123456',",
+			"	'EXPIRA'=>'+5 days', // +1 months  +2 weeks ...",
+			"	'CLIENTE' => array(",
+			"		'email' => 'test@test.com',",
+			"		'first_name' => 'Test',",
+			"		'last_name' => 'User',",
+			"		'identification' => array(",
+			"			'type' => 'CPF',",
+			"			'number' => '19119119100',",
+			"		),",
+			"		'address' => array(",
+			"			'zip_code' => '06233200',",
+			"			'street_name' => 'Av. das Nações Unidas',",
+			"			'street_number' => '3003',",
+			"			'neighborhood' => 'Bonfim',",
+			"			'city' => 'Osasco',",
+			"			'federal_unit' => 'SP',",
+			"		),",
+			"	)",
+			"]);",
+			"",
+			"die(globals::wsReturn(\\$pagamento,1));"
+		]
+	},
+	"pix": {
+		"scope": "php",
+		"prefix": ["pix","playload", "qrcode"],
+		"body": [
+			"import::playloadpix();",
+			"import::qrcode();",
+			"",
+			"	\\$obPayload = (new playloadpix)",
+			"	->setPixKey('06739566950') //sem pontos ou traços",
+			"	->setDescription('Pagamento do pedido 123456')",
+			"	->setMerchantName('Cristiane Alves da Silva')",
+			"	->setMerchantCity('SAO PAULO')",
+			"	->setAmount(100.00)",
+			"	->setTxid('WDEV1234');",
+			"	",
+			"	//CÓDIGO DE PAGAMENTO PIX",
+			"	\\$payloadQrCode = \\$obPayload->getPayload();",
+			"	die('<img src=\"'.qrcode::text(\\$payloadQrCode)->process(300)->getImgBase64().'\"/>');",
+
+		]
+	},
+	"static public function()": {
+		"scope": "php",
+		"prefix": ["class", "static", "function"],
+		"body": [
+			"	class $1{",
+			"		static public function select$2() {die(globals::wsReturn('retorno',1));}",
+			"		static public function insert$2() {die(globals::wsReturn('retorno',1));}",
+			"		static public function update$2() {die(globals::wsReturn('retorno',1));}",
+			"		static public function delete$2() {die(globals::wsReturn('retorno',1));}",
+			"	}"
+		]
+	},
+	"img::addTexto": {
+		"scope": "php",
+		"prefix": ["img", "addTexto","img::addTexto"],
+		"body": [
+			"	img::addTexto([",
+			"		'ORIGINAL'	=>null,",
+			"		'FINAL'		=>null,",
+			"		'FONT_SIZE'	=>25,",
+			"		'TEXT_Y'	=>'center',",
+			"		'TEXT_X'	=>'center',",
+			"		'TEXTO'		=>'Lorim Ipsum',",
+			"		'FONTE'		=>__DIR__.'/fonte.ttf',",
+			"		'COR'		=>'#FFF'",
+			"	]);"
+
+		]
+	},
+	"QRCode": {
+		"scope": "php",
+		"prefix": ["qr", "code", "qrcode"],
+		"body": [
+			"	QRCode::text(\"texto\")",
+			"	->bookmark(\"title\",\"url\")",
+			"	->contact(\"name\",\"address\",\"phone\",\"email\")",
+			"	->content(\"type\",\"size\",\"content\")",
+			"	->email(\"email\",\"subject\",\"message\")",
+			"	->geo(\"lat\",\"lon\",\"height\")",
+			"	->sms(\"numero\", \"texto\")",
+			"	->phone(\"numero\")",
+			"	->url(\"URL\")",
+			"	->draw(300);"
+
+	// echo QRCode::text('Xablau Tecnologia Integrada LTDA')
+	// ->process(200)
+	// ->saveImg('./tetseeeeeeee.png')
+// ->printImg()
+// ->getTagImg()
+// ->getImgBase64()
+
+
+
+
+
+		]
+	},
+
+	"window.confirmAuth2FA": {
+		"scope": ["php","javascript","html"],
+		"prefix": ["confirm","auth","2FA"],
+		"body": [
+			"window.confirmAuth2FA(",
+			"	function (SUCESSO) {},",
+			"	function (FALHA) {}",
+			");",
+		]
+	},
+	"Submit Form": {
+		"scope": ["php","javascript","html"],
+		"prefix": ["submit","form","send"],
+		"body": [
+			"$(\"$1\").submit(function(e){",
+			"	var formData = $(\"$1\").serializeObject();",
+			"//----------------------------------------------------------",
+			"",
+			"$2",
+			"",
+			"//----------------------------------------------------------",
+			"	e.preventDefault();",
+			"	return false;",
+			"})",
+		]
+	},
+
+
+
+	"LIPSUM": {
+		"scope": ["php","html","javascript"],
+		"prefix": ["lipsum","Lorem","ipsum","dolor","amet"],
+		"body": [
+			"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi et diam vitae sapien ullamcorper imperdiet eu vitae leo. In at urna sit amet justo pharetra porta. Ut nulla lectus, mollis a feugiat ut, elementum eu ex. Sed tempor, turpis in lacinia tempor, turpis odio hendrerit est, eu porta ligula metus ac nisi. Cras gravida accumsan dignissim. Praesent venenatis fringilla tincidunt. In imperdiet semper lacus id imperdiet. Donec quis tristique purus, nec maximus nunc. Donec dictum non augue quis posuere. In eget interdum libero. Quisque malesuada viverra ultrices. Nullam posuere lacinia nunc efficitur aliquam. Sed leo arcu, luctus a blandit id, molestie ac tortor. Aenean congue et urna eget imperdiet.",
+			"Vestibulum malesuada lectus sit amet vehicula viverra. Donec quam massa, consectetur quis convallis in, ornare id metus. Sed nibh ipsum, tempus vel pellentesque nec, vehicula eu risus. Aliquam convallis massa quis sodales interdum. Interdum et malesuada fames ac ante ipsum primis in faucibus. Sed et lacus tortor. Mauris fermentum lacus a dolor lobortis venenatis. Donec eu gravida turpis, quis facilisis elit. Phasellus sit amet libero sed ex facilisis egestas sit amet id sapien",
+			"Nam vel odio leo. Nullam egestas, arcu at imperdiet tempus, nisi elit tincidunt dui, ac ullamcorper ligula arcu sed mauris. Nunc id enim tristique urna iaculis blandit. In vitae urna justo. Nam vitae egestas orci. Quisque fermentum mi nibh, ac iaculis est porta id. Mauris gravida purus ut arcu fringilla, eget elementum odio ultrices. Sed elementum enim in odio porta, at pretium enim rhoncus. Mauris non nibh eros. Vivamus quis mattis lorem. Donec ultricies imperdiet est ut laoreet.",
+			"Vestibulum dapibus risus quis magna eleifend ullamcorper. Etiam ipsum sem, vestibulum at mauris id, vulputate gravida lectus. Donec eu pretium eros. Sed a massa ex. Nulla facilisi. Integer quis tincidunt sapien. Interdum et malesuada fames ac ante ipsum primis in faucibus. Ut eu turpis cursus turpis suscipit iaculis hendrerit non massa. Praesent rutrum odio nec posuere tempus. Ut hendrerit vestibulum ex ac accumsan. Etiam sagittis leo magna, ac posuere nibh mattis id. Sed tempus sollicitudin nibh non tincidunt. Fusce vehicula pulvinar dolor, ac sagittis tellus porta sed. Curabitur rhoncus tempus sodales. Phasellus nec aliquam diam.",
+		]
+	},
+	"PCT": {
+		"scope": ["html","php","javascript"],
+		"prefix": ["numbers","pct","porcentagem"],
+		"body": [
+			"numbers::PCT_valor(\\$elemento=10, \\$total=100);",
+			"numbers::valor_PCT(\\$elemento=10, \\$total=100);"
+		]
+	},
+	"CLIP BOARD": {
+		"scope": ["html","php","javascript"],
+		"prefix": ["copia","ctrl","clipboard","clopoart","cliboard"],
+		"body": [
+			"window.clipboard('texto',function(){},function(erro){});"
+		]
+	},
+	"MUSTACHE TEMPLATE JS": {
+		"scope": ["php","html","javascript"],
+		"prefix": ["mustache","template"],
+		"body": [
+			"Mustache.tags					=[\"[\", \"]\"];",
+			"var DATA_TEMPLATE 				= {\"TESTE\":234};",
+			"var MODEL						= \\$(\"#TEMPLATE\").text();",
+			"var HTML_TABELA					= Mustache.render(MODEL,DATA_TEMPLATE);",
+			"//<script id=\"TEMPLATE\" type=\"text/template\"></script>"
+		]
+	},
+
+	"geolocalização PHP": {
+		"scope": ["php"],
+		"prefix": ["geo","local","cep","viacep"],
+		"body": [
+			"// $coord = [-25.37304518915937, -49.1864448658857];",
+			"// print_r(geoLocation::geoCoordenadas($coord[0],$coord[1])); // long, lat",
+			"// geoLocation::geoCep('83408-280',1175); // cep, número",
+			"// geoLocation::geoSearch('Elizabeth Parodi'); // pesquisa por string",
+			"// geoLocation::cep('83408-280'); // cep",
+			"// geoLocation::pesquisaCep('RUA','CIDADE','UF');",
+		]
+	},
+	"window.setModal": {
+		"scope": ["html","php","javascript"],
+		"prefix": ["window","setModal","modal","popup","alert"],
+		"body": [
+			"// 'modal-small','modal-large','modal-x-large','modal-top-left','modal-top-right','modal-bottom-left'",
+			"// 'modal-bottom-right','modal-right-side','modal-left-side','modal-top-frame','modal-bottom-frame'",
+			"// 'modal-default','modal-longo','modal-scroll-interno','modal-center'",
+			" window.setModal({",
+			"	xClose          :true,",
+			"	btnClose        :true,",
+			"	btnAction       :true,",
+			"	keyboard        :false,",
+			"	blockButton     :false,",
+			"	type            :'modal-default',",
+			"	title           :'Default Title',",
+			"	content         :'Blank Content',",
+			"	btnCloseLabel   :'Close',",
+			"	btnActionLabel  :'Acept',",
+			"	onLoad      	:function(e){},",
+			"	btnCloseFn      :function(e){},",
+			"	btnActionFn     :function(e){},",
+			"});"
+		]
+	},
+	"2FAut": {
+		"scope": "php",
+		"prefix": ["2fa","auth","factory"],
+		"body": [
+			"\\$verifyPOST		= auth2Factory::verifyRequest(\\$_POST['private']['auth'])",
+			"\\$secret 			= auth2Factory::appName('appName')->getSecret();",
+			"\\$getQrCode 		= auth2Factory::userName('userName')->getQrCode(\\$_secret);",
+			"\\$getQrCodeImg 	= auth2Factory::userName('userName')->getQrCodeImg(\\$_secret);",
+			"\\$getCode 		= auth2Factory::getCode(\\$_secret);",
+			"\\$getCode 		= auth2Factory::verify(\\$secret,\\$code);",
+			"if(user::verificaRequisicao2FA()){",
+			"	// ------------ ",
+			"}",
+		]
+	},
+	"WoopsErrors": {
+		"scope": "php",
+		"prefix": ["error","woops","ops","exeption"],
+		"body": [
+			"// throw new Exception('Error:'.__LINE__);",
+			"// throw new RuntimeException('Error:'.__LINE__);",
+			"// throw new InvalidArgumentException('Error:'.__LINE__);",
+			"// throw new UnexpectedValueException('Error:'.__LINE__);",
+			"// throw new ReflectionException('Error:'.__LINE__);",
+			"// throw new AssertionError('Error:'.__LINE__);"
+		]
+	},
+	"Grid Bootstrap": {
+		"scope": "html",
+		"prefix": ["grid","row","col"],
+		"body": [
+			"<!--",
+			"   col- : Extra small < 576px",
+			"   col-sm- : Small ≥ 576px",
+			"   col-md- : Medium ≥768px",		
+			"   col-lg- : Large ≥ 992px", 
+			"   col-xl- : Extra large ≥ 1200px", 
+			"-->",
+			"<div class=\"row\">",
+			"  <div class=\"col-12 col-sm-3 col-md-4 col-lg-6 col-xl-4 \">col</div>",
+			"</div>",
+		]
+	},
+
+
+
+
+	"upload": {
+		"scope": "javascript",
+		"prefix": "up",
+		"body": [
+			"$('#botao').click(function(){",
+			"   e.preventDefault();",
+			"   $(\"#inputFile\").click();",
+			"   return false;",
+			"})",
+			"",
+			"window.changeUpload = function(e){",
+			"   e.preventDefault();",
+			"   $('#_____').ajaxForm({",
+			"   url         : '/office/upload',",
+			"   type        : 'POST',",
+			"   dataType    : 'json',",
+			"   clearForm   : true,",
+			"   forceSync   : false,",
+			"   processData : false,",
+			"   data      : {",
+			"      function: 'globals::verifyWsFn',",
+			"      private: {},",
+			"      public: {},",
+			"   },",
+			"   beforeSend: function(xhr) {},",
+			"   beforeSubmit: function(xhr) {console.log(xhr);},",
+			"   uploadProgress: function(event, position, total, percentComplete) {},",
+			"   success: function(xhr) {},",
+			"   complete: function(xhr) {},",
+			"   error: function(xhr) {}",
+			"   });",
+			"   //.submit();",
+			"   return false;",
+			"};",
+		]
+	},
+	"globals::wsReturn": {
+		"scope": "php",
+		"prefix": ["ws", "return"],
+		"body": [
+			" die(globals::wsReturn($1,1));",
+			" die(globals::wsPrivateReturn($1,1));"
+		]
+	},
+	"coment": {
+		"prefix": "com",
+		"body": [
+			"########################################################################################",
+			"#   $1",
+			"########################################################################################"
+		],
+		"description": "comment"
+	},
+
+	"print_pre": {
+		"prefix": ["pr","print_r","pre"],
+		"body": [
+			"globals::__pre($1);"
+		],
+		"description": "Log output to console"
+	},
+	"print_r": {
+		"prefix": ["print","pr","print_r"],
+		"body": [
+			"print_r($1);",
+			"exit();"
+		],
+		"description": "Log output to console"
+	},
+	"PUBLIC": {
+		"prefix": "pb",
+		"body": [
+			"\\$_POST['public']"
+		]
+	},
+	"PRIVATE": {
+		"prefix": "pv",
+		"body": [
+			"\\$_POST['private']"
+		]
+	},
+
+	"varDump": {
+		"prefix": "vd",
+		"body": [
+			"echo '<pre>';",
+			"var_dump($1);",
+			"echo '</pre>';",
+			"exit();"
+		],
+		"description": "Log output to console"
+	},
+	"Foreach": {
+		"prefix": "for",
+		"body": [
+			"echo '<pre>';",
+			"    foreach(\\$array as \\$key=> \\$value){",
+			"       print_r(\\$value);",
+			"    }",
+			"echo '</pre>';"
+		],
+		"description": "Log output to console"
+	},
+
+
+	"globals::webserver": {
+		"scope": ["javascript","HTML","PHP"],
+		"prefix": "ws",
+		"body": [
+			"globals::webserver([",
+			"	\"url\"			=>\"https://localhost:3000/webserver/create-wallets\",",
+			"	\"function\"		=>\"wallet::teste\",",
+			"	\"type\"			=>\"POST\",",
+			"	\"public\"		=>[\"teste\"=>1],",
+			"	\"private\"		=>[\"teste\"=>2],",
+			"	\"beforesend\"	=>function(){},",
+			"	\"success\"		=>function(\\$retorno){",
+			"		globals::wsReturn(\\$retorno,1);",
+			"	}",
+			"]);"
+		]
+	},
+
+	"webserver": {
+		"scope": ["javascript","HTML","PHP"],
+		"prefix": "ws",
+		"body": [
+			"webserver({",
+			"   function: '$1::$2',",
+			"   type:'POST|GET',",
+			"   url:'/admin/webserver',",
+			"   public:{},",
+			"   private:{},",
+			"   beforesend:function(json){},",
+			"   aftersend:function(json){},",
+			"   complete: function(json){},",
+			"   success:function(json){",
+			"		if(json.status==1){",
+			"			console.log(json.response)",
+			"		}else{",
+			"			console.log(json.response)",
+			"		}",
+			"   }",
+			"})"
+		]
+	},
+
+	"ws Upload": {
+		"scope": ["javascript","html","php"],
+		"prefix": ["up","upload","ws"],
+		"body": [
+			"webserver({",
+			"	function: '$1::$2',",
+			"	public:{},",
+			"	private:{},",
+			"	upload:{",
+			"		url				:'/office/upload',",
+			"		form			: $('#$3'),",
+			"		clearForm		: false,",
+			"		resetForm		: false,",
+			"		processData		: false,",
+			"		before			: function(){},",
+			"		uploadProgress	: function( event, position, total, percentComplete ){},",
+			"		success			: function(){},",
+			"		complete		: function( xhr ){},",
+			"		error			: function( xhr ){},",
+			"	}",
+			"})",
+		]
+	},
+
+	"click": {
+		"scope": ["javascript","php","html"],
+		"prefix": "click",
+		"body": [
+			" \\$(\"$1\").on('click', function (e) { ",
+			"   e.preventDefault();",
+			"   ",
+			"   return false;",
+			" });"
+		],
+		"description": "click"
+	},
+	"click LIVE": {
+		"scope": ["javascript","php","html"],
+		"prefix": "click",
+		"body": [
+			"	\\$(document).on('click','$1', function (e) { ",
+			"		e.preventDefault();",
+			"			",
+			"		return false;",
+			"	});"
+		]
+	},
+
+	"mail SendGrid ": {
+		"scope": "php",
+		"prefix": ["mail","sendGrid","grid","send"],
+		"body": [
+			"globals::sendGrid([",
+			"	'ASSUNTO'=>'🔑 Atenção::Token de verificação',",
+			"	'MENSAGEM'=>'TEMPLATE HTML',",
+			"	'DESTINO'=>'teste@feats.com.br',",
+			"	'ANEXOS'=>'FILE_PATH',// ['','','','']",
+			"	'IMAGES'=>'FILE_PATH',// ['','','','']",
+			"	'NOME'=>'ROMUALDO'",
+			"]);"
+		]
+	},
+
+
+
+	"PlaceHolder": {
+		"prefix": ["img","src","imagem"],
+		"body": [
+			"<img src=\"/system/placeholder-img/_SIZE_/_BG_/_COLOR_/_TEXT_/_FONTSIZE_\"/>",
+		]
+	},
+	"console.log": {
+		"prefix": ["console.log","console","log"],
+		"body": [
+			"console.log('$1');",
+		]
+	},
+	"debugFW": {
+		"scope": "php",
+		"prefix": "deb",
+		"body": [
+			"if(isset(\\$_GET['debug']) && \\$_GET['debug']==true){",
+			"   ob_clean();",
+			"   echo '<pre>';",
+			"   print_r($1);",
+			"   echo '</pre>';",
+			"   exit();",
+			"}"
+		]
+	},
+	"STORE PROCIDURE": {
+		"scope": "php",
+		"prefix": ["SP","STORE","PROCIDURE"],
+		"body": [
+			"\\$classe = new mariaDB();",
+            "\\$classe->connect();",
+            "\\$classe->SP_NOME_DA_SP(\\$PARAM_1,\\$PARAM_2,\\$PARAM_3);",
+            "\\$classe->execSP('SP_NOME_DA_SP');",
+            "return \\$classe->fetch_array('SP_NOME_DA_SP');",
+		]
+	},
+
+
+	"MySQL Select": {
+		"scope": "php",
+		"prefix": ["mysql", "select"],
+		"body": [
+			"\\$_SELECT = new mariaDB();",
+			"\\$_SELECT->connect();",
+			"\\$_SELECT->set_table('tabela'); // ou set_tableQuery",
+			"\\$_SELECT->set_colum('PALAVRA');",
+			"\\$_SELECT->set_where('COLUNA=1');",
+			"\\$_SELECT->join('INNER','tabela',' on ');",
+			"\\$_SELECT->group_by('COLUNA');",
+			"\\$_SELECT->set_limit(1,10);",
+			"\\$_SELECT->set_order('COLUNA','asc');",
+			"\\$_SELECT->select('param');",
+			"// \\$_SELECT->prepare_select('param');",
+			"",
+			"//----------------SUB QUERY-----------------",
+			"// \\$_SELECT->set_subQuery('param');",
+			"// \\$_SELECT->set_tableQuery('param pa');",
+			"// \\$_SELECT->set_colum('pa.COLUNA');",
+			"",
+			"\\$_RESULT = \\$_SELECT->fetch_array('param');",
+			"// \\$dataTable = \\$_POST['public|private']['oAjaxData'];",
+			"// \\$_RESULT = \\$_SELECT->dataTable(\\$dataTable); ",
+			"",
+			"// print_r(\\$subQuery->query);",
+			"return \\$_RESULT; ",
+		]
+	},
+	"MySQL Insert": {
+		"scope": "php",
+		"prefix": ["mysql", "insert"],
+		"body": [
+			"\\$INSERT = new mariaDB();",
+			"\\$INSERT->connect();",
+			"\\$INSERT->set_table(\"tabela\");",
+			"\\$INSERT->set_insert('coluna','valor');",
+			"\\$INSERT->set_insert('coluna','valor');",
+			"\\$INSERT->set_insert('coluna','valor');",
+			"\\$INSERT->set_insert_form(\\$ARRAY);//CASO VENHA DIRETO DO FORM",
+			"\\$INSERT->insert();",
+			"",
+			"// TRANSACTION + ROLLBACK",
+			"\\$INSERT->prepare_insert();",
+			"\\$INSERT->transaction(function (\\$ERROR) {",
+			"    print_r(\\$ERROR);",
+			"});",
+			"\\$INSERT->execQuery();",
+		]
+	},
+	"DOMContentLoaded": {
+		"scope": ["php","js"],
+		"prefix": ["onload","ready","load"],
+		"body": [
+			"document.addEventListener(\"DOMContentLoaded\", () => {"
+			"$1"
+			"})"
+		]
+	},
+	"Get Params": {
+		"scope": "php",
+		"prefix": ["private", "public","_POST","_GET"],
+		"body": [
+			"\\$_POST['private']['$1'];",
+			"\\$_POST['public']['$1'];",
+			"\\$_POST['files']['$1'];"
+		]
+	},
+	"MySQL Update": {
+		"scope": "php",
+		"prefix": ["mysql", "update"],
+		"body": [
+			"\\$UPDATE = new mariaDB();",
+			"\\$UPDATE->connect();",
+			"\\$UPDATE->set_table('tabela');",
+			"\\$UPDATE->set_update('COLUNA','VALOR');",
+			"\\$UPDATE->set_update_form(\\$ARRAY);//CASO VENHA DIRETO DO FORM",
+			"\\$UPDATE->set_where('COLUNA=1');",
+			"\\$UPDATE->update();",
+			"",
+			"// TRANSACTION + ROLLBACK",
+			"\\$UPDATE->prepare_update();",
+			"\\$UPDATE->transaction(function (\\$ERROR) {",
+			"    print_r(\\$ERROR);",
+			"});",
+			"\\$UPDATE->execQuery();"
+		]
+	},
+
+	"MySQL Delete": {
+		"scope": "php",
+		"prefix": ["mysql", "delete"],
+		"body": [
+			"\\$DELETE = new mariaDB();",
+			"\\$DELETE->connect();",
+			"\\$DELETE->set_table('tabela');",
+			"\\$DELETE->set_where('COLUNA=1');",
+			"\\$DELETE->delete();",
+			"",
+			"// TRANSACTION + ROLLBACK",
+			"\\$DELETE->prepare_delete();",
+			"\\$DELETE->transaction(function (\\$ERROR) {",
+			"    print_r(\\$ERROR);",
+			"});",
+			"\\$DELETE->execQuery();"
+		]
+	},
+
+	"Location": {
+		"scope": "php",
+		"prefix": ["location", "header","refresh"],
+		"body": [
+			"globals::location('/$1','js|php|html');"
+		]
+	},
+	"MySQL fetch_array": {
+		"scope": "php",
+		"prefix": ["mysql", "fetch_array"],
+		"body": [
+			"\\$$1->fetch_array();"
+		]
+	},
+
+	"MySQL SP": {
+		"scope": "php",
+		"prefix": ["mysql", "sp"],
+		"body": [
+			"\\$classe = new mariaDB();",
+			"\\$classe->connect();",
+			"\\$classe->SP_NomeDaSP(\\$var1,\\$var2,\\$var3);",
+			"\\$classe->execSP('SP_NomeDaSP',\\$response);",
+			"// print_r(\\$classe->fetch_array('SP_NomeDaSP'));",
+			"// print_r(\\$classe->get_queries());",
+			"// print_r(\\$classe->sp_response());",
+		]
+	},
+	"display:none": {
+		"scope": "html",
+		"prefix": "none",
+		"body": [
+			"style=\"display:none\"",
+		]
+	},
+	"Placeholder IMG": {
+		"scope": "html",
+		"prefix": ["img","image","placeholder"],
+		"body": [
+			"<!-- Parâmetros: 100x100/bg/color/text/fontsize -->",
+			"<img src=\"/system/placeholder-img/$1/$2/$3/$4/$5\" id=\"$6\" class=\"$7\" >",
+		]
+	},
+	"Placeholder IMG": {
+		"scope": "php",
+		"prefix": "img",
+		"body": [
+			"import::img();",
+			"",
+			"	\\$_CONFIG1 = [",
+			"			'SIZE'=>'350x100',",
+			"			'TEXT'=>'hahaha é desse jeito',",
+			"			'BG'=>'c6d9fd',",
+			"			'COLOR'=>'000000',",
+			"			'CLASS'=>'example',",
+			"			'ID'=>null,",
+			"			'FONTSIZE'=>20,",
+			"	];",
+			"",
+			"	\\$_CONFIG2 =[",
+			"			'query' 	=> \\$opt['query'] 	?? 'people',",
+			"			'limit' 	=> \\$opt['limit'] 	?? 15,",
+			"			'w' 		=> \\$opt['w'] 		?? 150,",
+			"			'h' 		=> \\$opt['h'] 		?? 100,",
+			"			'q' 		=> \\$opt['q'] 		?? 100,",
+			"			'fit' 		=> \\$opt['fit'] 	?? 'crop'",
+			"	];",
+			"",
+			"globals::__pre(img::bancoDeImg(\\$_CONFIG2));",
+			"globals::__pre(img::svg(\\$_CONFIG1));",
+			"globals::__pre(img::svgBase64(\\$_CONFIG1));"
+		]
+	},
+
+	"Processa PHP como JS (topo)": {
+		"prefix": "javascript",
+		"body": [
+			"<script><?php ob_clean();header('Content-Type:application/javascript');?>",
+			"document.addEventListener(\"DOMContentLoaded\", () => {})",
+		]
+	},
+
+	"inner Template": {
+		"scope": "php",
+		"prefix": "inner",
+		"body": [
+			"\\$inner_CSS->VAR=\"\";",
+			"\\$inner_JS->VAR=\"\";",
+			"\\$inner_HTML->VAR=\"\";",
+		]
+	},
+	"geolocalização JS": {
+		"scope": ["html","javascript"],
+		"prefix": ["geo","local"],
+		"body": [
+			"window.getGeolocalizacao({",
+			"	beforesend  	: function(e) {return true},",
+			"	aftersend   	: function(e) {return true},",
+			"	success     	: function(e) {return true},",
+			"	error     		: function(e) {return true},",
+			"});",
+		]
+	},
+	"Template HTML": {
+		"scope": "php",
+		"prefix": "template",
+		"body": [
+			"//Template separado",
+			"\\$MODEL  = new Template(getenv('DOCUMENT_ROOT').\"/projeto/\".getenv('APPLICATION_PATH').\"/---.html\");",
+			"\\$MODEL->VAR=\"\";",
+		]
+	},
+
+	"Globals::Crypt": {
+		"scope": "php",
+		"prefix": [
+			"hash",
+			"createFirstKeys",
+			"setTokenPasswordHash",
+			"getTokenPasswordHash",
+			"returnTokenPasswordHa",
+			"simpleCrypta",
+			"simpleDecrypt",
+			"simpleBaseCrypt",
+			"crypt",
+			"decryp",
+			"clearTok",
+			"setTokenRest",
+			"getTokenRest"
+		],
+		"body": [
+			"globals::hash(60);",
+			"globals::createFirstKeys();",
+			"globals::simpleCrypta(\\$t,\\$k=null);",
+			"globals::simpleDecrypta(\\$t,\\$k=null);",
+			"globals::simpleBaseCrypt(\\$t,\\$k=null);",
+			"globals::crypt(\\$plaintext, \\$key = ADMIN_SALT_PASS_SESSION);",
+			"globals::decrypt(\\$ciphertext, \\$key = ADMIN_SALT_PASS_SESSION);",
+
+			"\\$_CRYPT 	=  globals::createTempSSLHash(\\$_MENSAGEM);",
+			"\\$_DECRYPT 	=  globals::verifyTempSSLHash(\\$_CRYPT);",
+			"\\$_CRYPT 	=  globals::encryptPublicSSL(\\$_MENSAGEM);",
+			"\\$_DECRYPT 	=  globals::decryptPrivateSSL(\\$_CRYPT);",
+			"\\$_CRYPT 	=  globals::encryptPrivateSSL(\\$_MENSAGEM);",
+			"\\$_DECRYPT 	=  globals::decryptPublicSSL(\\$_CRYPT);",
+			"//Aqui decryptamos o que vem do webservice JS",
+			"\\$_DECRYPT 	=  globals::JSEncryptDecrypt(\\$_CRYPT);",
+			"\\$_CRYPT 		=  globals::JSEncryptEncrypt(\\$_MENSAGEM);",
+
+
+
+
+		]
+	},
+
+
+
+
+}

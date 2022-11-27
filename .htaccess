@@ -1,0 +1,130 @@
+	#---------------------------------------------------------------------------
+	# BLOQUEIA A ASSINATURA DO SERVIDOR
+	#---------------------------------------------------------------------------
+	#
+	# httpd.conf 	: ServerTokens ProductOnly
+	# php.ini  		: expose_php = Off
+	#
+	#---------------------------------------------
+		Header unset X-Powered-By
+		ServerSignature Off
+		
+	#---------------------------------------------------------------------------
+	# BLOQUEIA LISTAGEM DE ARQUIVOS
+	#---------------------------------------------------------------------------
+		Options All -Indexes
+
+	#---------------------------------------------------------------------------
+	# BLOQUEIA ACESSO POR METODO
+	#---------------------------------------------------------------------------
+		RewriteCond 	%{REQUEST_METHOD} ^(RMDIR|MKDIR|INDEX|MOVE|TRACE|DELETE|TRACK|PUT|HEAD|OPTIONS|CONNECT)
+  		RewriteRule ^(.*)$ - [L,R=403]
+
+	#---------------------------------------------------------------------------
+	# PROIBE ACESSO
+	#---------------------------------------------------------------------------
+
+		<Files ~ "^.*\.([Hh][Tt][Aa])">
+			Order Allow,Deny
+			Deny from all
+			Satisfy all
+		</Files>
+
+		<FilesMatch ".(env|map|conf|key)$">
+			Order Allow,Deny
+			Deny From All
+			Satisfy all
+			ErrorDocument 403 "<h1>Acesso ilegal detectado</h1><hr><h3>O que esse narizinho curioso quer aqui?</h3>"
+		</FilesMatch>
+
+	#---------------------------------------------------------------------------#
+	# FORÇA CODIFICAÇÃO UTF8
+	#---------------------------------------------------------------------------#
+		<FilesMatch ".(htm|html|css|js)$">
+			AddDefaultCharset UTF-8
+		</FilesMatch>
+
+	#---------------------------------------------------------------------------#
+	# DESCOMPACTAÇÃO GZIP
+	#---------------------------------------------------------------------------#
+		AddType text/javascript				.mjs
+		AddType text/css					.css.gzip
+		AddType application/javascript		.js.gzip
+		AddType text/html 					.html.gzip
+		AddType application/x-font-ttf		.ttf.gzip
+		AddType application/x-font-woff		.woff.gzip
+		AddType application/x-font-woff2	.woff2.gzip
+		AddType application/x-font-eot		.eot.gzip
+		AddType application/x-font-svg		.svg.gzip
+
+	#-----------------------------------------------------------------------------------------------
+
+		AddEncoding gzip .gzip
+		<Files *.ttf.gzip>
+		ForceType application/x-font-ttf
+		</Files>
+		<Files *.woff.gzip>
+		ForceType application/x-font-woff
+		</Files>
+		<Files *.woff2.gzip>
+		ForceType application/x-font-woff2
+		</Files>
+		<Files *.eot.gzip>
+		ForceType application/x-font-eot
+		</Files>
+		<Files *.svg.gzip>
+		ForceType application/x-font-svg
+		</Files>
+		<Files *.css.gzip>
+		ForceType text/css
+		</Files>
+		<Files *.js.gzip>
+		ForceType application/javascript
+		</Files>
+		<Files *.html.gzip>
+		ForceType text/html
+		</Files>
+
+	#---------------------------------------------------------------------------
+	#	HEADERS PADRÃO
+	#-----------------------------------------------------------------------------------------------
+
+		Header always append X-Frame-Options 		SAMEORIGIN
+		Header set 			 X-Content-Type-Options nosniff
+		Header set 			 X-XSS-Protection 		"1; mode=block"
+		Header set 			 X-WebKit-CSP 			"policy"
+		Header set 			 Accept-Encoding		"gzip | compress | deflate | br| identity| *"
+		Header set 			 Accept-Encoding		"gzip"
+		Header set 			 Accept-Encoding		"gzip, compress, deflate, br, identity, *"
+		Header set 			 Accept-Encoding		"br;q=1.0, gzip;q=0.8, *;q=0.1"
+
+
+	#---------------------------------------------------------------------------
+	#	VARIAVEIS DE AMBIENTE
+	#---------------------------------------------------------------------------
+		 SetEnv ADMIN_DB_SERVER	 localhost
+		 SetEnv ADMIN_DB_USER	 root
+		 SetEnv ADMIN_DB_PASS	 
+		 SetEnv ADMIN_DB_NAME	 TESTEWK
+
+		# SetEnvIfNoCase Host "(.*)" 				HTTP_MY_REMOTE_HOST=$1
+		# SetEnvIfNoCase Remote_Host "(.*)" 		HTTP_MY_REMOTE_HOST=$1
+		# SetEnvIfNoCase Remote_Addr "(.*)" 		HTTP_MY_REMOTE_ADDR=$1
+		# SetEnvIfNoCase Server_Addr "(.*)"			HTTP_MY_SERVER_ADDR=$1
+		# SetEnvIfNoCase Request_Method "(.*)"		HTTP_MY_REQUEST_METHOD=$1
+		# SetEnvIfNoCase Request_Protocol "(.*)"	HTTP_MY_REQUEST_PROTOCOL=$1
+		# SetEnvIfNoCase Request_URI "(.*)"			HTTP_MY_REQUEST_URI=$1
+
+
+	#---------------------------------------------------------------------------#
+	# URLS BLOQUEANDO REQUISIÇÕES ESTRANHAS
+	# PERMITINDO APENAS POST E GET
+	#---------------------------------------------------------------------------#
+	<IfModule mod_rewrite.c>
+		RewriteEngine 	On
+		RewriteCond 	%{REQUEST_METHOD} ^(RMDIR|MKDIR|INDEX|MOVE|TRACE|DELETE|TRACK|PUT|HEAD|OPTIONS|CONNECT)
+  		RewriteRule 	^(.*)$ - [L,R=403]	
+		RewriteCond 	%{SCRIPT_FILENAME} !-f
+		RewriteRule 	^(.*)$	index.php	[L]
+	</IfModule>
+
