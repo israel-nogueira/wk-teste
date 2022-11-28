@@ -8,7 +8,7 @@
     // URL A QUAL ESTAMOS ACESSANDO
 	//--------------------------------------------------------------
 		$REQUEST_URI = trim($_SERVER['REQUEST_URI'],'/');
-		$PATH= ($REQUEST_URI=="") ? "home" : $_SERVER['REQUEST_URI'];
+		$PATH= ($REQUEST_URI=="") ? "produtos" : $_SERVER['REQUEST_URI'];
 		define('URL_PATH',explode('?',$PATH)[0]);
 
 		

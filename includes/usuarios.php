@@ -1,3 +1,3 @@
 <?
 
-    $inner_HTML->HEADER= "USUARIOS";
+    $inner_HTML->HEADER= "LISTA DE USUÁRIOS";
