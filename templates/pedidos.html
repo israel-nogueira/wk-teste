@@ -1,0 +1,334 @@
+<!-- BEGIN STYLES -->
+	<link rel="stylesheet" href="/assets/js/datatables/highlight/dataTables.searchHighlight.css">
+	<link rel="stylesheet" href="/assets/js/datatables/reorder-rows/rowReorder.dataTables.min.css">
+	<link rel="stylesheet" href="/assets/css/lista-usuarios.css">
+<!-- END STYLES -->
+
+
+<!-- BEGIN CONTENT -->
+	<header class="page-header">
+		<h2>{HEADER}</h2>
+	</header>
+		<div class="row">
+			<div class="col-12">
+				<section class="card">
+					<div class="card-body dtbl-ctnr">
+						<table class="table table-bordered table-striped" id="datatable"></table>
+					</div>
+				</section>
+			</div>
+		</div>
+<!-- END CONTENT -->
+
+
+<!-- BEGIN SCRIPTS -->
+	<script src="/assets/js/jquery.serialize-object.js"></script>
+	<script src="/assets/js/mustache.min.js"></script>
+	<script src="/assets/vendor/select2/js/select2.js"></script>
+	<script src="/assets/vendor/datatables/media/js/jquery.dataTables.min.js"></script>
+	<script src="/assets/js/datatables/select/dataTables.select.min.js"></script>
+	<script src="/assets/js/datatables/highlight/jquery.highlight.js"></script>
+	<script src="/assets/js/datatables/highlight/dataTables.searchHighlight.min.js"></script>
+	<script src="/assets/js/datatables/reorder-rows/dataTables.rowReorder.min.js"></script>
+	<script>
+			/*
+			|------------------------------------------------------------------
+			|	INICIA O PLUGIN
+			|-------------------------------------------------------------------
+			*/
+				var idDataTable = '.dtbl-ctnr #datatable'
+				var startDataTable = $(idDataTable).DataTable({
+										"scrollX": true,
+										"processing":true,
+										"serverSide":true,
+										"paging":true,
+										'autofill':true,
+										"info":true,
+										'order':[[0, 'asc']],
+										"pagingType":"numbers",
+										'select':false,
+										'responsive':true,
+										'buttons':true,
+										"language":{ 
+											"url": '/assets/js/datatables/1.10.20/js/Portuguese-Brasil.json'
+										},
+										dom: 'l<"toolbar">frtip',
+										select: true,
+										// fnRowCallback: 	function (nRow, aData) {},
+										rowCallback: function( row, data ) {
+											// $('.dtbl-ctnr .dataTables_scrollBody .vitrine').prepend(
+											// 	Mustache.render($("#item_vitrine").html(),data)
+											// );
+										},
+										preDrawCallback: function( settings ) {
+											// $('.dtbl-ctnr .dataTables_scrollBody .vitrine').remove();
+											// $('.dtbl-ctnr .dataTables_scrollBody').prepend('<div class="vitrine row row-gutter-sm">');
+										},
+										initComplete: 		function () {
+											// $('.dtbl-ctnr #datatable').hide();
+											// $(idDataTable+"_filter" ).hide();
+											// $(idDataTable+"_length" ).hide();
+											// $(idDataTable+"_length" ).hide();
+											// $(idDataTable+"_paginate").hide();
+											// $(idDataTable+"_info").hide();
+											// $(idDataTable+"_wrapper").prepend('<div id="back" class="btn btn-primary" style="color: #000;margin:20px 0;position:relative;float:left;">Voltar aos tipos</div>')
+											// $(idDataTable+"_wrapper").find('.dataTables_scrollHead').hide();									
+											$(idDataTable+"_wrapper").prepend('<a href="/novo-pedido" class="btn btn-primary" style="color: #000;margin:20px 0;position:relative;float:right;">Adicionar pedido</a>')
+										},
+										"ajax":function(request,drawCallback,settings) {
+											$.ajax({
+												contentType: "application/x-www-form-urlencoded; charset=UTF-8",
+												dataType: "text",
+												url: "/lib/functions.php",
+												method: "POST",
+												async: false,
+												data: {
+													oAjaxData:settings.oAjaxData,
+													functions:"listaPedidos"
+												},
+												success: 	function (request)	{
+													drawCallback(JSON.parse(request));
+												}
+											});
+										},										
+										"columns": [
+											{
+												data:'CODE',
+												name:'CODE',
+												sTitle: "CODE",
+												className: '',
+												width: "auto",
+												orderable:true,
+												fnCreatedCell : function (aData,nTd, sData, oData, iRow, iCol) {},
+												visible: true
+											},
+											{
+												data:'CODE_USUARIO',
+												name:'CODE_USUARIO',
+												sTitle: "CODE_USUARIO",
+												className: '',
+												width: "auto",
+												orderable:true,
+												fnCreatedCell : function (aData,nTd, sData, oData, iRow, iCol) {},
+												visible: true
+											},
+											{
+												data:'DATA_PEDIDO',
+												name:'DATA_PEDIDO',
+												sTitle: "DATA_PEDIDO",
+												className: '',
+												width: "auto",
+												orderable:true,
+												fnCreatedCell : function (aData,nTd, sData, oData, iRow, iCol) {},
+												visible: true
+											},
+											{
+												data:'NOME_USUARIO',
+												name:'NOME_USUARIO',
+												sTitle: "NOME_USUARIO",
+												className: '',
+												width: "auto",
+												sType: "string",
+												orderable:true,
+												visible: true,
+												fnCreatedCell : function (aData,nTd, sData, oData, iRow, iCol) {},
+											},
+											{
+												data:'CODE_STATUS',
+												name:'CODE_STATUS',
+												sTitle: "CODE_STATUS",
+												className: '',
+												width: "auto",
+												sType: "string",
+												orderable:true,
+												visible: false,
+												fnCreatedCell : function (aData,nTd, sData, oData, iRow, iCol) {},
+											},
+											{
+												data:'STATUS',
+												name:'STATUS',
+												sTitle: "STATUS",
+												className: 'STATUS_PEDIDO',
+												width: "auto",
+												sType: "string",
+												orderable:true,
+												visible: true,
+												fnCreatedCell : function (aData,nTd, sData, oData, iRow, iCol) {},
+											},
+											{
+												data:'NULL',
+												name:'',
+												sTitle: "",
+												className: 'exclui_pedido',
+												defaultContent:`<button type="button" class="iconOpen mb-1 mt-1 mr-1 btn btn-default" style="padding: 0px 23px;"><i class="fas fa-trash"></i></button>`,
+												width: 40,
+												orderable:false,
+												fnCreatedCell : function (aData,nTd, sData, oData, iRow, iCol) {},
+												visible: true
+											},
+											{
+												data:'NULL',
+												name:'',
+												sTitle: "",
+												className: 'detalhes',
+												defaultContent:`<button type="button" class="iconOpen mb-1 mt-1 mr-1 btn btn-default" style="padding: 0px 23px;">
+																	<svg aria-hidden="true" focusable="false" data-prefix="fas" data-icon="magnifying-glass" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" class="margin-right-md icon svg-inline--fa fa-magnifying-glass fa-fw"><path fill="currentColor" d="M416 208c0 45.9-14.9 88.3-40 122.7L502.6 457.4c12.5 12.5 12.5 32.8 0 45.3s-32.8 12.5-45.3 0L330.7 376c-34.4 25.2-76.8 40-122.7 40C93.1 416 0 322.9 0 208S93.1 0 208 0S416 93.1 416 208zM208 352c79.5 0 144-64.5 144-144s-64.5-144-144-144S64 128.5 64 208s64.5 144 144 144z" class=""></path></svg>
+																</button>`,
+												width: 40,
+												orderable:false,
+												fnCreatedCell : function (aData,nTd, sData, oData, iRow, iCol) {
+
+												},
+												visible: true
+											},
+															
+										]
+									
+									});
+
+			
+			//-----------------------------------------------------------------
+			// FUNÇÃO QUE RETORNA OS DADOS QUANDO CLICAMOS NA CÉLULA
+			//------------------------------------------------------------------
+			
+				window.getDataRowTD = function(a){
+					var DOM_TD			= $(a);
+					var DOM_TR			= $(a).closest('tr');
+					var CELL			= startDataTable.cell( a );
+					var COLUNA			= startDataTable.settings().init().columns;
+					var INDEX_COLUNA	= startDataTable.cell(a).index().column;
+					var INDEX_ROW		= $(a).closest('tr').index();
+					var NOME_COLUNA		= COLUNA[INDEX_COLUNA].data;
+					var ROW				= startDataTable.row(DOM_TR);
+					var COLUNA_DATA		= startDataTable.column( INDEX_COLUNA ).data()[ROW.index()];
+					var ORIGINAL		= startDataTable.column( INDEX_COLUNA ).data()[INDEX_ROW];
+					var ROW_DATA 		= ROW.data();
+					return {
+						"COLUNA_DATA":COLUNA_DATA,
+						"ELEMENT_TD":DOM_TD,
+						"ELEMENT_TR":DOM_TR,
+						"INDEX_COLUNA":INDEX_COLUNA,
+						"COLUNAS":COLUNA,
+						"INDEX_ROW":INDEX_ROW,
+						"ROWS":ROW,
+						"ROW_DATA":ROW_DATA,
+						"CELL":CELL,
+						"NOME_COLUNA":NOME_COLUNA,
+						"ORIGINAL":ORIGINAL,
+					};
+				}
+
+			//-----------------------------------------------------------------
+			// DIRECIONA A URL DE NOVO PEDIDO
+			//------------------------------------------------------------------
+				$(idDataTable).on('click', 'td.novoPedido', function (a) {
+					a.preventDefault()
+					var DATA =window.getDataRowTD($(this));
+					window.location = '/novo-pedido';
+					return false;
+				})
+
+			//------------------------------------------------------------------
+			//	MANDAMOS AO END-POINT A FUNÇÃO DE EXCLUIR EDAMOS REFRESH
+			//------------------------------------------------------------------
+				$(idDataTable).on('click', 'td.exclui_pedido', function (a) {
+					a.preventDefault()
+					var DATA =window.getDataRowTD($(this));
+					$.ajax({
+						contentType: "application/x-www-form-urlencoded; charset=UTF-8",
+						dataType: "text",
+						url: "/lib/functions.php",
+						method: "POST",
+						async: false,
+						data: {
+							functions:"excluiPedido",
+							CODE:DATA.ROW_DATA.CODE
+						},
+						success: 	function (request)	{
+							startDataTable.ajax.reload( null, false );
+						}
+					});
+					return false;
+				})
+
+			//-----------------------------------------------------------------
+			// DIRECIONA A URL DOS DETALHES DO PLANO
+			//------------------------------------------------------------------
+				$(idDataTable).on('click', 'td.detalhes', function (a) {
+					a.preventDefault()
+					var DATA =window.getDataRowTD($(this));
+					window.location = '/detalhes-pedido?CODE='+DATA.ROW_DATA.CODE
+					return false;
+				})
+
+			/*
+			|------------------------------------------------------------------
+			|	EDIÇÃO DOS CAMPOS
+			|-------------------------------------------------------------------
+			*/
+				$(idDataTable).on('click', 'td.STATUS_PEDIDO', function () {
+					var DATATABLE = window.getDataRowTD(this);	
+	
+					if($(DATATABLE['ELEMENT_TD']).find('select').length==0){
+						$(DATATABLE['ELEMENT_TD']).html($('#COMBO_STATUS').html());
+
+
+						var valSelect = parseInt(DATATABLE['ROW_DATA'].CODE_STATUS);
+						$(DATATABLE['ELEMENT_TD']).find('select').val(valSelect);
+						
+						$(DATATABLE['ELEMENT_TD']).find('select').on('change',function(a){
+							var VALUE = $(this).val();
+							if(VALUE!=""){
+								console.log(VALUE)
+								$.ajax({
+									contentType: "application/x-www-form-urlencoded; charset=UTF-8",
+									dataType: "text",
+									url: "/lib/functions.php",
+									method: "POST",
+									async: false,
+									data: {
+										functions:"mudatSatusPedido",
+										CODE:DATATABLE.ROW_DATA.CODE,
+										CODE_STATUS:VALUE,
+									},
+									success: 	function (request)	{
+										startDataTable.ajax.reload( null, false );
+									}
+								});
+
+							}else{
+								DATATABLE['CELL'].data(DATATABLE['COLUNA_DATA'])
+							}
+						})
+						$(DATATABLE['ELEMENT_TD']).find('select').focus();
+						$(DATATABLE['ELEMENT_TD']).find('select').focusout(function(){	
+
+							var VALUE = $(DATATABLE['ELEMENT_TD']).find('select').val();	
+							if(VALUE!=null && VALUE!=''){				
+								DATATABLE['CELL'].data($(DATATABLE['ELEMENT_TD']).find("select option:selected").text())
+							}else{
+								DATATABLE['CELL'].data(DATATABLE['COLUNA_DATA'])
+
+							}
+						});
+					}
+				});
+
+
+
+	</script>
+<!-- END SCRIPTS -->
+
+
+<!-- BEGIN TEMPLATE -->
+<template id="COMBO_STATUS">
+	<select style="border:solid 1px #0000003b;border-radius: 5px;width: 100%;padding: 10px;margin: 0px;">
+		<option value="">Selecione</option>
+		<!-- BEGIN SELECT_STATUS  -->
+		<option value="{CODE}">{STATUS}</option>
+		<!-- END SELECT_STATUS  -->
+	</select>
+</template>
+
+<!-- END TEMPLATE -->
+

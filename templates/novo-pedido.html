@@ -1,0 +1,83 @@
+<!-- BEGIN STYLES -->
+	<style></style>
+<!-- END STYLES -->
+
+<!-- BEGIN CONTENT -->
+		<header class="page-header">
+			<h2>{HEADER}</h2>
+		</header>
+		<div class="row">
+			<div class="col">
+				<form id="novo-pedido">	
+					<section class="card card-modern card-big-info">
+						<div class="card-body">
+							<div class="row">
+								<div class="col-lg-2-5 col-xl-1-5">
+									<i class="card-big-info-icon bx bx-user-circle"></i>
+									<h2 class="card-big-info-title">Novo pedido</h2>
+									<p class="card-big-info-desc">Preencha o formulário e cadastre um novo pedido.</p>
+								</div>
+								<div class="col-lg-3-5 col-xl-4-5">
+									<div class="form-group row align-items-center">
+										<label class="col-lg-5 col-xl-3 control-label text-lg-right mb-0">Selecine um usuário</label>
+										<div class="col-lg-7 col-xl-6">
+											<select class="form-control form-control-modern" name="CODE_USUARIO">
+												<!-- BEGIN SELECT_USERS -->
+												<option value="{CODE}">{NOME}</option>
+												<!-- END SELECT_USERS -->
+											</select>
+										</div>
+									</div>
+									<div class="form-group row align-items-center">
+										<label class="col-lg-5 col-xl-3 control-label text-lg-right mb-0">STATUS</label>
+										<div class="col-lg-7 col-xl-6">
+											<select class="form-control form-control-modern" name="CODE_STATUS">
+												<!-- BEGIN SELECT_STATUS -->
+												<option value="{CODE}">{STATUS}</option>
+												<!-- END SELECT_STATUS -->
+											</select>										</div>
+									</div>
+									<div class="form-group row align-items-center">
+										<div class="btn-group d-flex" role="group">
+											<a id="salvar" class="btn btn-success w-100" role="button">CRIAR PEDIDO</a>
+											<a href="/pedidos" class="btn btn-primary w-100" role="button">Cancelar</a>
+										</div>
+									</div>
+								</div>
+							</div>
+
+						</div>
+					</section>
+				</form>
+			</div>
+		</div>
+<!-- END CONTENT -->
+
+<!-- BEGIN SCRIPTS -->
+	<script>
+		document.addEventListener("DOMContentLoaded", () => {
+				$(document).on('click','#salvar', function (e) { 
+					e.preventDefault();
+						$.ajax({
+							contentType: "application/x-www-form-urlencoded; charset=UTF-8",
+							dataType: "text",
+							url: "/lib/functions.php",
+							method: "POST",
+							async: false,
+							data: {
+								functions:"novoPedido",
+								form:$('#novo-pedido').serializeObject()
+							},
+							success: 	function (request)	{
+								window.location = '/pedidos';
+							}
+						});
+					return false;
+				});
+		})
+	</script>
+<!-- END SCRIPTS -->
+
+<!-- BEGIN TEMPLATE -->
+	<template></template>
+<!-- END TEMPLATE -->

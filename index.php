@@ -9,18 +9,19 @@
 	//--------------------------------------------------------------
 		$REQUEST_URI = trim($_SERVER['REQUEST_URI'],'/');
 		$PATH= ($REQUEST_URI=="") ? "home" : $_SERVER['REQUEST_URI'];
-		define('URL_PATH',$PATH);
+		define('URL_PATH',explode('?',$PATH)[0]);
+
 		
     //--------------------------------------------------------------
     // CARREGAMOS NA MEMORIA O TEMPLATE DO DESKTOP
     //--------------------------------------------------------------
-		$_DESKTOP = new template(__DIR__ . '/assets/html/desktop.html');
+		$_DESKTOP = new template(__DIR__ . '/templates/desktop.html');
 	
     //--------------------------------------------------------------
     // BUSCAMOS AGORA OS ARQUIVOS REFERENTES A URL
     //--------------------------------------------------------------
-		$_TEMPLATE	= __DIR__ .'/assets/html/'.URL_PATH . '.html';
-		$_PAGE		= __DIR__ .'/assets/php/'.URL_PATH . '.php';
+		$_TEMPLATE	= __DIR__ .'/templates/'.URL_PATH . '.html';
+		$_PAGE		= __DIR__ .'/includes/'.URL_PATH . '.php';
 
 		if (file_exists($_TEMPLATE)) {
 			$inner_CSS  = new Template($_TEMPLATE, true);

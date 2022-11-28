@@ -155,11 +155,44 @@
 												orderable:true,
 												visible: true,
 												fnCreatedCell : function (aData,nTd, sData, oData, iRow, iCol) {},
-											}
+											},
+
 															
 										]
 									
 									});
+
+			/*
+			|------------------------------------------------------------------
+			|	FUNÇÃO QUE RETORNA OS DADOS QUANDO CLICAMOS NA CÉLULA
+			|-------------------------------------------------------------------
+			*/
+				window.getDataRowTD = function(a){
+					var DOM_TD			= $(a);
+					var DOM_TR			= $(a).closest('tr');
+					var CELL			= startDataTable.cell( a );
+					var COLUNA			= startDataTable.settings().init().columns;
+					var INDEX_COLUNA	= startDataTable.cell(a).index().column;
+					var INDEX_ROW		= $(a).closest('tr').index();
+					var NOME_COLUNA		= COLUNA[INDEX_COLUNA].data;
+					var ROW				= startDataTable.row(DOM_TR);
+					var COLUNA_DATA		= startDataTable.column( INDEX_COLUNA ).data()[ROW.index()];
+					var ORIGINAL		= startDataTable.column( INDEX_COLUNA ).data()[INDEX_ROW];
+					var ROW_DATA 		= ROW.data();
+					return {
+						"COLUNA_DATA":COLUNA_DATA,
+						"ELEMENT_TD":DOM_TD,
+						"ELEMENT_TR":DOM_TR,
+						"INDEX_COLUNA":INDEX_COLUNA,
+						"COLUNAS":COLUNA,
+						"INDEX_ROW":INDEX_ROW,
+						"ROWS":ROW,
+						"ROW_DATA":ROW_DATA,
+						"CELL":CELL,
+						"NOME_COLUNA":NOME_COLUNA,
+						"ORIGINAL":ORIGINAL,
+					};
+				}
 
 			/*
 			|------------------------------------------------------------------

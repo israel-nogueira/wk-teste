@@ -1,0 +1,159 @@
+<!-- BEGIN STYLES -->
+	<style></style>
+<!-- END STYLES -->
+
+<!-- BEGIN CONTENT -->
+	<header class="page-header">
+		<h2>{HEADER}</h2>
+	</header>
+	<section class="card">
+		<div class="card-body">
+			<div class="invoice">
+				<header class="clearfix">
+					<div class="row">
+						<div class="col-sm-6 mt-3">
+							<h2 class="h2 mt-0 mb-1 text-dark font-weight-bold">INVOICE</h2>
+							<h4 class="h4 m-0 text-dark font-weight-bold">#76598345</h4>
+						</div>
+						<div class="col-sm-6 text-right mt-3 mb-3">
+							<div class="ib">
+								<img src="/assets/img/Logo-03.png" style="height: 80px; margin: 0 10px;" />
+							</div>
+							<address class="ib mr-5">
+								WK Tecnology
+								<br/>
+								Rua das Laranjeiras 73
+								<br/>
+								Phone: +55 41 4567-8901
+								<br/>
+								wktecnology@wktecnology.com
+							</address>
+						</div>
+					</div>
+				</header>
+				<div class="bill-info">
+					<div class="row">
+						<div class="col-md-6">
+							<div class="bill-to">
+								<p class="h5 mb-1 text-dark font-weight-semibold">To:</p>
+								<address>
+									CODE: {USER_CODE}<br/>
+									NOME: {USER_NOME}<br/>
+									CPF: {USER_CPF}<br/>
+									ENDERECO: {USER_ENDERECO}<br/>
+									EMAIL: {USER_EMAIL}<br/>
+									NASCIMENTO: {USER_NASCIMENTO}<br/>
+								</address>
+							</div>
+						</div>
+						<div class="col-md-6">
+							<div class="bill-data text-right">
+								<p class="mb-0">
+									<span class="text-dark">Invoice Date:</span>
+									<div>{DATA_PEDIDO}</div>
+								</p>
+								<p class="mb-0">
+									<div class="row">
+										<select id="select-produtos"  style="border:solid 1px #0000003b;border-radius: 5px;width: calc(100%);padding: 10px;margin: 10px">
+											
+											<option value="">SELECIONE UM PRODUTO</option>
+											<!-- BEGIN SELECT_PRODUTOS -->
+											<option value="{VALUE}">{NOME}</option>
+											<!-- END SELECT_PRODUTOS -->
+										</select>
+									
+										<div id="add-pedido" class="btn btn-block btn-default" style=" margin:10px;">Adicionar ao pedido</div>
+									</div>
+								</p>
+
+
+							</div>
+						</div>
+					</div>
+				</div>
+			
+				<table class="table table-responsive-md invoice-items">
+					<thead>
+						<tr class="text-dark">
+							<th class="font-weight-semibold">#</th>
+							<th class="font-weight-semibold">Item</th>
+							<th class="text-center font-weight-semibold">Valor</th>
+							<th class="text-center font-weight-semibold">Qtdd.</th>
+							<th class="text-center font-weight-semibold">Total</th>
+							<th class="text-center font-weight-semibold"></th>
+						</tr>
+					</thead>
+					<tbody>
+
+
+						<!-- BEGIN TABELA_PEDIDOS -->
+						<tr>
+							<td>{CODE_PRODUTO}</td>
+							<td class="font-weight-semibold text-dark">{NOME_PRODUTO}</td>
+							<td class="text-center">${VALOR_PRODUTO}</td>
+							<td class="text-center">{QTDD_PRODUTO}</td>
+							<td class="text-center">${VALOR_TOTAL}</td>
+							<td class="text-center"><i class="fas fa-trash"></i></td>
+						</tr>
+						<!-- END TABELA_PEDIDOS -->
+
+						
+					</tbody>
+				</table>
+			
+				<div class="invoice-summary">
+					<div class="row justify-content-end">
+						<div class="col-sm-4">
+							<table class="table h6 text-dark">
+								<tbody>
+									<tr class="h4">
+										<td colspan="2">Valor total</td>
+										<td class="text-left">${GET_TOTAL}</td>
+									</tr>
+								</tbody>
+							</table>
+						</div>
+					</div>
+				</div>
+			</div>
+
+			<div class="text-right mr-4">
+				<a href="/pedidos" class="btn btn-default">Voltar aos pedidos</a>
+			</div>
+		</div>
+	</section>
+<!-- END CONTENT -->
+
+<!-- BEGIN SCRIPTS -->
+	<script>
+		document.addEventListener("DOMContentLoaded", () => {
+				$(document).on('click','#add-pedido', function (e) { 
+					e.preventDefault();
+					var PRODUTO = $('#select-produtos').val().split(',')
+
+					$.ajax({
+						contentType: "application/x-www-form-urlencoded; charset=UTF-8",
+						dataType: "text",
+						url: "/lib/functions.php",
+						method: "POST",
+						async: false,
+						data: {
+							functions:"addProdutoPedido",
+							PRODUTO:PRODUTO,
+							CODE_PEDIDO:"{CODE_PEDIDO}",
+						},
+						success: 	function (request)	{
+							location.reload()
+						}
+					});
+
+
+					return false;
+				});
+		})
+	</script>
+<!-- END SCRIPTS -->
+
+<!-- BEGIN TEMPLATE -->
+	<template></template>
+<!-- END TEMPLATE -->
