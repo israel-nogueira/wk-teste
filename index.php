@@ -7,10 +7,11 @@
 	//--------------------------------------------------------------
     // URL A QUAL ESTAMOS ACESSANDO
 	//--------------------------------------------------------------
-		$REQUEST_URI = trim($_SERVER['REQUEST_URI'],'/');
-		$PATH= ($REQUEST_URI=="") ? "produtos" : $_SERVER['REQUEST_URI'];
-		define('URL_PATH',explode('?',$PATH)[0]);
-
+		$REQUEST_URI	= trim($_SERVER['REQUEST_URI'],'/');
+		$PATH			= ($REQUEST_URI=="") ? "usuarios" : $_SERVER['REQUEST_URI'];
+		$PATH_GET		= explode('?',$PATH);
+		define('URL_PATH',$PATH_GET[0]);
+	
 		
     //--------------------------------------------------------------
     // CARREGAMOS NA MEMORIA O TEMPLATE DO DESKTOP

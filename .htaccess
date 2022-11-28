@@ -102,10 +102,10 @@
 	#---------------------------------------------------------------------------
 	#	VARIAVEIS DE AMBIENTE
 	#---------------------------------------------------------------------------
-		 SetEnv ADMIN_DB_SERVER	 localhost
-		 SetEnv ADMIN_DB_USER	 root
-		 SetEnv ADMIN_DB_PASS	 
-		 SetEnv ADMIN_DB_NAME	 TESTEWK
+		 SetEnv ADMIN_DB_SERVER	 mysql41-farm2.uni5.net
+		 SetEnv ADMIN_DB_USER	 temp0103
+		 SetEnv ADMIN_DB_PASS	 q1w2e3r4t5y6
+		 SetEnv ADMIN_DB_NAME	 temp0103
 
 		# SetEnvIfNoCase Host "(.*)" 				HTTP_MY_REMOTE_HOST=$1
 		# SetEnvIfNoCase Remote_Host "(.*)" 		HTTP_MY_REMOTE_HOST=$1
